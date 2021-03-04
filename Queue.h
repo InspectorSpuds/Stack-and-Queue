@@ -1,4 +1,5 @@
-
+#include <iostream>
+#include <string> 
 
 #ifndef QUEUE_H
 #define QUEUE_H
@@ -23,6 +24,7 @@ class Queue
     void queue(int val);
     int dequeue();
     int queueSize();
-    bool isEmpty();g
+    bool isEmpty();
+    std::string queueOrder();
 };
 #endif 

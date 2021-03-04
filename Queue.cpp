@@ -37,31 +37,53 @@ Queue::Queue(const Queue &old)
 
 void Queue::operator=(const Queue &old)
 {
+  //if the memory is not the same
+  if(this != &old) {
+    delete q;
+    size  = old.size;
+    Node* traverse = old.q->next;
 
-}
+    if(old.size == 0)
+      return;
 
-void Queue::queue(int val)
-{ 
-  if(q = nullptr) {
-    q = new Node{val, nullptr};
-    tail = q;
+    //assign initial list vals
+    q = new Node{old.q->data, nullptr};
     head = q;
-  } else {
-    tail->next = new Node{val, nullptr};
-    size++;
+    tail = q;
+    //copy values
+    while(traverse != nullptr) {
+      tail->next = new Node{traverse->data, nullptr};
+      traverse = traverse->next;
+      tail = tail->next;
+    }
+
     tail = tail->next;
   }
 }
 
+void Queue::queue(int val)
+{ 
+  //if the queue is empty, initialize node value
+  if(q == nullptr) {
+    q = new Node{val, nullptr};
+    tail = q;
+    head = q;
+  } else { //just add to the tail and move tail
+    tail->next = new Node{val, nullptr};
+    tail = tail->next;
+  }
+  //increment size
+  size++;
+}
+
 int Queue::dequeue()
 {
-  //if empty throw exception
+  int val = 0; //the head value
+  //error check for an empty queue
   if(size == 0)
     throw 0;
-
-  int val = head->data;
-  //head->next = nullptr;
-  //move list contents and return old value
+  val = head->data; //get data
+  //move list contents, delete memory, and return old value
   q = q->next;
   size--;
   delete head;
@@ -77,4 +99,17 @@ int Queue::queueSize()
 bool Queue::isEmpty()
 {
   return size == 0;
+}
+
+std::string Queue::queueOrder()
+{
+  std::string order = "";
+  Node* traverse = q;
+  
+  while(traverse != nullptr) {
+    order += std::to_string(traverse->data) + " ";
+    traverse = traverse->next;
+  }
+
+  return order;
 }
