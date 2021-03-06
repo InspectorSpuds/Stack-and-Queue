@@ -1,4 +1,5 @@
-#include <iostream>
+//Filename: Queue.h
+//Description:
 #include <string> 
 
 #ifndef QUEUE_H
@@ -11,6 +12,7 @@ struct Node
 
 class Queue
 {
+  class EmptyQueue{};
   private:
     Node* q; //acutal queue list
     Node* head; //the start of the queue
@@ -23,8 +25,7 @@ class Queue
     void operator=(const Queue &old);
     void queue(int val);
     int dequeue();
-    int queueSize();
+    int getSize();
     bool isEmpty();
-    std::string queueOrder();
 };
 #endif 

@@ -1,5 +1,7 @@
-#include "Queue.h"
+//Filename: Queue.cpp
+//Description: the method implementations of the methods in the Queue class
 
+#include "Queue.h"
 
 Queue::Queue()
 {
@@ -18,8 +20,9 @@ Queue::Queue(const Queue &old)
   size  = old.size;
   Node* traverse = old.q->next;
 
+  //handle empty queue 
   if(old.size == 0)
-    return;
+    throw EmptyQueue();
 
   //assign initial list vals
   q = new Node{old.q->data, nullptr};
@@ -80,8 +83,9 @@ int Queue::dequeue()
 {
   int val = 0; //the head value
   //error check for an empty queue
-  if(size == 0)
-    throw 0;
+  if(isEmpty())
+    throw EmptyQueue();
+
   val = head->data; //get data
   //move list contents, delete memory, and return old value
   q = q->next;
@@ -91,7 +95,7 @@ int Queue::dequeue()
   return val;
 }
 
-int Queue::queueSize()
+int Queue::getSize()
 {
   return size;
 }
@@ -99,17 +103,4 @@ int Queue::queueSize()
 bool Queue::isEmpty()
 {
   return size == 0;
-}
-
-std::string Queue::queueOrder()
-{
-  std::string order = "";
-  Node* traverse = q;
-  
-  while(traverse != nullptr) {
-    order += std::to_string(traverse->data) + " ";
-    traverse = traverse->next;
-  }
-
-  return order;
 }
